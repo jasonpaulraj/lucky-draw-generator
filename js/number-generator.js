@@ -27,6 +27,11 @@ function randomName(ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
 }
 
 function rollClick(ENTRANTS, ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
+  var currentEntrants = localStorage.getItem("entrants_active").split(",");
+
+  console.log("currentEntrants length " + currentEntrants.length);
+  console.log("currentEntrants " + currentEntrants);
+
   localStorage.removeItem("entrants_winners");
   rollEl.classList.add("hide");
   rollAgainEl.classList.add("hide");
@@ -51,17 +56,20 @@ function rollClick(ENTRANTS, ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
     }
     var activeEntrants = localStorage.getItem("entrants_active").split(",");
     var removedEntrants = localStorage.getItem("entrants_removed").split(",");
-    console.log(removedEntrants);
-    console.log(activeEntrants);
+    console.log("removedEntrants " + removedEntrants);
+    console.log("activeEntrants " + activeEntrants);
     var updatedEntrants = activeEntrants.filter(
       (val) => !removedEntrants.includes(val)
     );
 
-    console.log(updatedEntrants);
+    console.log("updatedEntrants " + updatedEntrants);
 
     localStorage.setItem("entrants_active", updatedEntrants);
-
-    winnerEl.innerHTML = `<span>And the winners are...</span><br>${winner}`;
+    if (currentEntrants.length <= 1) {
+      winnerEl.innerHTML = `<span>All names have been picked.</span><br>Thank you.`;
+    } else {
+      winnerEl.innerHTML = `<span>And the winners are...</span><br>${winner}`;
+    }
   }, 500);
 }
 
