@@ -13,10 +13,7 @@ localStorage.removeItem("entrants_active");
 localStorage.removeItem("entrants_removed");
 localStorage.removeItem("entrants_winners");
 
-function randomName(
-  ENTRANTS_ACTIVE,
-  ENTRANTS_TO_SELECT
-) {
+function randomName(ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
   ENTRANTS_ACTIVE = localStorage.getItem("entrants_active").split(",");
   const rand = Math.floor(Math.random() * ENTRANTS_ACTIVE.length);
   const name = ENTRANTS_ACTIVE[rand];
@@ -59,8 +56,6 @@ function rollClick(ENTRANTS, ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
     var updatedEntrants = activeEntrants.filter(
       (val) => !removedEntrants.includes(val)
     );
-
-
 
     console.log(updatedEntrants);
 
