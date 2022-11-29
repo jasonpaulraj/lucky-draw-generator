@@ -6,37 +6,68 @@ const rollEl = document.querySelector(".roll");
 const rollAgainEl = document.querySelector(".roll-again");
 const namesEl = document.querySelector(".names");
 const winnerEl = document.querySelector(".winner");
+const addEntrantsBlock = document.querySelector(".add-entrants");
+const startRoleBlock = document.querySelector(".start-roll");
+localStorage.removeItem("entrants");
+localStorage.removeItem("entrants_active");
+localStorage.removeItem("entrants_removed");
+localStorage.removeItem("entrants_winners");
 
 function randomName(
-  ENTRANTS,
-  ENTRANTS_REMOVED,
   ENTRANTS_ACTIVE,
   ENTRANTS_TO_SELECT
 ) {
-  ENTRANTS = localStorage.getItem("entrants_active").split(",");
-  const rand = Math.floor(Math.random() * ENTRANTS.length);
-  const name = ENTRANTS[rand];
-  namesEl.innerText = name;
+  ENTRANTS_ACTIVE = localStorage.getItem("entrants_active").split(",");
+  const rand = Math.floor(Math.random() * ENTRANTS_ACTIVE.length);
+  const name = ENTRANTS_ACTIVE[rand];
+  namesEl.innerText = ENTRANTS_ACTIVE.sort(() => 0.5 - Math.random()).slice(
+    0,
+    10
+  );
 
-  ENTRANTS_ACTIVE = ENTRANTS.sort(() => 0.5 - Math.random()).slice(0, 10);
+  localStorage.setItem("entrants_winners", namesEl.innerText);
+  return namesEl.innerText;
 }
 
-function rollClick(ENTRANTS_ACTIVE,ENTRANTS_TO_SELECT) {
+function rollClick(ENTRANTS, ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
+  localStorage.removeItem("entrants_winners");
   rollEl.classList.add("hide");
   rollAgainEl.classList.add("hide");
   winnerEl.classList.add("hide");
   namesEl.classList.remove("hide");
 
-  setDeceleratingTimeout(randomName, 10, 30);
-  console.log(ENTRANTS_ACTIVE);
+  setDeceleratingTimeout(randomName, 10, 10);
   setTimeout(() => {
     namesEl.classList.add("hide");
     winnerEl.classList.remove("hide");
     rollAgainEl.classList.remove("hide");
 
     const winner = namesEl.innerText;
+
+    if (localStorage.getItem("entrants_removed") !== null) {
+      localStorage.setItem(
+        "entrants_removed",
+        localStorage.getItem("entrants_removed") + "," + winner
+      );
+    } else {
+      localStorage.setItem("entrants_removed", winner);
+    }
+    var activeEntrants = localStorage.getItem("entrants_active").split(",");
+    var removedEntrants = localStorage.getItem("entrants_removed").split(",");
+    console.log(removedEntrants);
+    console.log(activeEntrants);
+    var updatedEntrants = activeEntrants.filter(
+      (val) => !removedEntrants.includes(val)
+    );
+
+
+
+    console.log(updatedEntrants);
+
+    localStorage.setItem("entrants_active", updatedEntrants);
+
     winnerEl.innerHTML = `<span>And the winners are...</span><br>${winner}`;
-  }, 4000);
+  }, 500);
 }
 
 function setDeceleratingTimeout(callback, factor, times) {
@@ -61,7 +92,7 @@ function updateEntrants(ENTRANTS, ENTRANTS_REMOVED, ENTRANTS_ACTIVE) {
 
   localStorage.setItem("entrants", entrants_save);
   localStorage.setItem("entrants_active", entrants_save);
-  console.log(entrants_save);
   ENTRANTS = localStorage.getItem("entrants").split(",");
-  console.log(ENTRANTS);
+  addEntrantsBlock.classList.add("hide");
+  startRoleBlock.classList.remove("hide");
 }

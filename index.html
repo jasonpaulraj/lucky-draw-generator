@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Solid Template</title>
+    <title>Lucky Draw</title>
     <link
       href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600"
       rel="stylesheet"
@@ -90,9 +90,9 @@
   <body>
     <div class="col-12" style="margin: auto; padding: 20px; max-width: 80vw">
       <div class="text-center col-10" style="display: flex">
-        <div class="form-group col-4">
-          <label for="entrant_list" style="margin-bottom: 20px; font-size: 3em"
-            >Entrants</label
+        <div class="form-group col-10 add-entrants">
+          <label for="entrant_list" style="margin: auto; font-size: 2em; padding-bottom: 1em;"
+            >Lucky Draw 2022</label
           >
           <br />
           <textarea class="form-control" id="entrant_list" rows="10"></textarea>
@@ -101,10 +101,10 @@
             class="btn btn-dark update-entrants"
             onclick="updateEntrants()"
           >
-            Add
+            Upload
           </button>
         </div>
-        <div class="col-4">
+        <div class="start-roll col-10 hide">
           <button class="roll" onclick="rollClick()">Roll</button>
           <div class="names hide"></div>
           <div class="winner hide"></div>
@@ -117,10 +117,7 @@
     <footer>
       <div class="container-fluid">
         <span class="pull-right text-muted small"
-          ><a href="http://www.bootstrapzero.com"
-            >Landing Zero by BootstrapZero</a
-          >
-          ©2015 Company</span
+          ><a href=""></a> Amee Yosang Komonta © 2022</span
         >
       </div>
     </footer>
