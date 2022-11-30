@@ -7,6 +7,7 @@ const rollAgainEl = document.querySelector(".roll-again");
 const namesEl = document.querySelector(".names");
 const winnerEl = document.querySelector(".winner");
 const addEntrantsBlock = document.querySelector(".add-entrants");
+const addEntrantsBlockTitle = document.querySelector(".title");
 const startRoleBlock = document.querySelector(".start-roll");
 localStorage.removeItem("entrants");
 localStorage.removeItem("entrants_active");
@@ -68,7 +69,7 @@ function rollClick(ENTRANTS, ENTRANTS_ACTIVE, ENTRANTS_TO_SELECT) {
     if (currentEntrants.length <= 1) {
       winnerEl.innerHTML = `<span>All names have been picked.</span><br>Thank you.`;
     } else {
-      winnerEl.innerHTML = `<span>And the winners are...</span><br>${winner}`;
+      winnerEl.innerHTML = `<span>And the winners are...</span><br><p class="winners-list">${winner}</p>`;
     }
   }, 500);
 }
@@ -97,5 +98,6 @@ function updateEntrants(ENTRANTS, ENTRANTS_REMOVED, ENTRANTS_ACTIVE) {
   localStorage.setItem("entrants_active", entrants_save);
   ENTRANTS = localStorage.getItem("entrants").split(",");
   addEntrantsBlock.classList.add("hide");
+  addEntrantsBlockTitle.classList.add("hide");
   startRoleBlock.classList.remove("hide");
 }
